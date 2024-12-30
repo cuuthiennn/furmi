@@ -1,0 +1,75 @@
+﻿@model IEnumerable<furni.Areas.Admin.Models.OrderModel>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container-fluid">
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            @Html.Raw(TempData["SuccessMessage"].ToString())
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex justify-content-center align-items-center">
+            <h6 class="m-0 font-weight-bold text-primary mr-auto">Danh sách đơn hàng</h6>
+
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataOrderTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Họ tên</th>
+                            <th>Địa chỉ giao hàng</th>
+                            <th>Số điện thoại</th>
+                            <th>Ngày đặt hàng</th>
+                            <th>Tổng số tiền đơn hàng</th>
+                            <th>Trạng thái của đơn hàng</th>
+                            <td></td>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var order in Model)
+                        {
+                            <tr>
+                                <td><a asp-area="Admin" asp-controller="Orders" asp-action="Display" asp-route-id="@order.Id" class="mr-2">@order.Id</a></td>
+                                <td>@(order.User.FirstName + " " + order.User.LastName)</td>
+                                <td>@order.Address</td>
+                                <td>@order.User.PhoneNumber</td>
+                                <td>@order.OrderDate</td>
+                                <td>@order.TotalAmount</td>
+                                <td>@order.Status</td>
+                                <td class="d-inline-block">
+                                    <a asp-area="Admin" asp-controller="Orders" asp-action="Update" asp-route-id="@order.Id" class="mr-2"><i class="fas fa-solid fa-pen text-warning"></i></a>
+                                    @if (ViewBag.IsAdmin)
+                                    {
+                                        <a asp-area="Admin" asp-controller="Orders" asp-action="Delete" asp-route-id="@order.Id"><i class="fas fa-solid fa-trash text-danger"></i></a>
+                                    }
+                                </td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#dataOrderTable").DataTable();
+        })
+    </script>
+}

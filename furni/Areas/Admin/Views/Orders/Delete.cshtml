@@ -1,0 +1,48 @@
+﻿@model furni.Areas.Admin.Models.OrderModel
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h3>Bạn có chắc là bạn muốn xóa đơn hàng này?</h3>
+<div>
+    <dl class="row">
+        <dt class="col-sm-4">
+            Người đặt hàng
+        </dt>
+        <dd class="col-sm-8">
+            @(Model.User.FirstName + " " + Model.User.LastName)
+        </dd>
+        <dt class="col-sm-4">
+            Mã đơn đặt hàng
+        </dt>
+        <dd class="col-sm-8">
+            @Model.Id
+        </dd>
+        <dt class="col-sm-4">
+            Tổng tiền
+        </dt>
+        <dd class="col-sm-8">
+            @Model.TotalAmount
+        </dd>
+        <dt class="col-sm-4">
+            Địa chỉ giao hàng
+        </dt>
+        <dd class="col-sm-8">
+            @Model.Address
+        </dd>
+        <dt class="col-sm-4">
+            Trạng thái
+        </dt>
+        <dd class="col-sm-8">
+            @Model.Status
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Xóa đơn hàng" class="btn btn-danger" /> |
+        <a asp-action="Index">Trở về danh sách đơn hàng</a>
+    </form>
+</div>
